@@ -1,5 +1,9 @@
-const dropList = document.querySelectorAll(".drop-list select");
+// The main variables we need
+const dropList = document.querySelectorAll(".drop-list select"),
+  fromCurrency = document.querySelector(".from select"),
+  toCurrency = document.querySelector(".to select");
 
+// Get the rate and country code
 for (let i = 0; i < dropList.length; i++) {
   for (currency_code in country_code) {
     let selected;
@@ -17,6 +21,7 @@ for (let i = 0; i < dropList.length; i++) {
   });
 }
 
+// Get the flag
 function loadFlag(element) {
   for (code in country_code) {
     if (code == element.value) {
@@ -25,3 +30,13 @@ function loadFlag(element) {
     }
   }
 }
+
+// Swap rate
+let exchangeBtn = document.querySelector(".drop-list .icon");
+exchangeBtn.addEventListener("click", (e) => {
+  let tempCode = fromCurrency.value;
+  fromCurrency.value = toCurrency.value;
+  toCurrency.value = tempCode;
+  loadFlag(fromCurrency);
+  loadFlag(toCurrency);
+});
