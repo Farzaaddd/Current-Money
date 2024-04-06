@@ -1,10 +1,8 @@
-// The main variables we need
 const dropList = document.querySelectorAll(".drop-list select"),
   fromCurrency = document.querySelector(".from select"),
   toCurrency = document.querySelector(".to select"),
   getBtn = document.querySelector("form button");
 
-// Get the rate and country code
 for (let i = 0; i < dropList.length; i++) {
   for (currency_code in country_code) {
     let selected;
@@ -22,30 +20,26 @@ for (let i = 0; i < dropList.length; i++) {
   });
 }
 
-// Get the flag
 function loadFlag(element) {
   for (code in country_code) {
     if (code == element.value) {
       let imgTag = element.parentElement.querySelector("img");
-      imgTag.src = `https://countryflagsapi.com/png/${country_code[code]}`;
+      imgTag.src = `https://flagcdn.com/w80/${country_code[code]}.png`;
     }
   }
 }
 
-// Load site
 window.addEventListener("load", (e) => {
   getExchangeRate();
 });
 
-// Get changes for rate
 getBtn.addEventListener("click", (e) => {
   e.preventDefault();
   getExchangeRate();
 });
 
-// Swap rate
-let exchangeBtn = document.querySelector(".drop-list .icon");
-exchangeBtn.addEventListener("click", (e) => {
+let exchnageBtn = document.querySelector(".drop-list .icon");
+exchnageBtn.addEventListener("click", (e) => {
   let tempCode = fromCurrency.value;
   fromCurrency.value = toCurrency.value;
   toCurrency.value = tempCode;
@@ -54,7 +48,6 @@ exchangeBtn.addEventListener("click", (e) => {
   getExchangeRate();
 });
 
-// Get API for current rate
 function getExchangeRate() {
   const amount = document.querySelector(".amount input"),
     totalExchangeRateTxt = document.querySelector(".exchange-rate");
@@ -66,13 +59,14 @@ function getExchangeRate() {
   }
 
   totalExchangeRateTxt.innerText = "Getting exchange rate...";
-  let url = `https://v6.exchangerate-api.com/v6/YourAPIKEY/latest/${fromCurrency.value}`;
+  let url = `https://v6.exchangerate-api.com/v6/5d71578e4cc7a6c131f1aa2d/latest/${fromCurrency.value}`;
   fetch(url)
     .then((response) => response.json())
     .then((result) => {
       let exchangeRate = result.conversion_rates[toCurrency.value];
       let totalExchangeRate = amountVal * exchangeRate.toFixed(2);
       totalExchangeRateTxt.innerText = `${amountVal} ${fromCurrency.value} = ${totalExchangeRate} ${toCurrency.value}`;
+      // console.log(totalExchangeRate);
     })
     .catch(() => {
       totalExchangeRateTxt.innerText = "Something went wrong !";
