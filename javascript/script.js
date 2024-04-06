@@ -66,9 +66,10 @@ function getExchangeRate() {
       let exchangeRate = result.conversion_rates[toCurrency.value];
       let totalExchangeRate = amountVal * exchangeRate.toFixed(2);
       totalExchangeRateTxt.innerText = `${amountVal} ${fromCurrency.value} = ${totalExchangeRate} ${toCurrency.value}`;
-      // console.log(totalExchangeRate);
+      console.log(totalExchangeRate);
     })
-    .catch(() => {
+    .catch((err) => {
       totalExchangeRateTxt.innerText = "Something went wrong !";
+      console.log(err);
     });
 }
